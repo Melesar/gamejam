@@ -20,6 +20,7 @@ namespace Source
         
         [Header("Ground check")]
         [SerializeField] private float _groundCheckDistance;
+        [SerializeField] private float _groundCheckRadius = 0.5f;
         [SerializeField] private float _groundSafetyDistance;
         [SerializeField] private LayerMask _groundMask;
 
@@ -119,7 +120,7 @@ namespace Source
         {
             var groundContact = Refs.groundContact.localPosition + Refs.rigidbody.position;
             var ray = new Ray(groundContact, _worldGravity);
-            _isLanded = Physics.Raycast(ray, out var hit, _groundCheckDistance, _groundMask);
+            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, out var hit, _groundCheckDistance, _groundMask);
             _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask)
                 ? safetyHit.distance
                 : _groundSafetyDistance;
