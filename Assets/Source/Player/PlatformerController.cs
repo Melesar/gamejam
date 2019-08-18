@@ -13,6 +13,7 @@ namespace Source
         [SerializeField] private float _jumpSpeed;
         [SerializeField] private float _jumpHeight = 2f;
         [SerializeField] private float _jumpDistance = 3f;
+        [SerializeField] private float _rotationTime = 0.5f;
 
         [Space]
         [SerializeField] private float _obstacleDetectionDistance = 1f;
@@ -165,11 +166,10 @@ namespace Source
             targetEulerAngles.z = -targetEulerAngles.z;
             var targetRotation = Quaternion.Euler(targetEulerAngles);
 
-            const float rotationTime = 1f;
             var currentTime = 0f;
-            while (currentTime < rotationTime)
+            while (currentTime < _rotationTime)
             {
-                var t = currentTime / rotationTime;
+                var t = currentTime / _rotationTime;
                 t = t * t * t * (t * (6f * t - 15f) + 10f);
                 Refs.rig.rotation = Quaternion.Slerp(currentRotation, targetRotation, t);
 
