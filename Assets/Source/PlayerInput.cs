@@ -19,6 +19,11 @@ namespace Source
             {
                 _controller.Jump();
             }
+
+            if (Input.GetButtonDown("Gravity"))
+            {
+                Gravity.Switch();
+            }
         }
 
         public void OnControllerChanged(PlayerController controller)

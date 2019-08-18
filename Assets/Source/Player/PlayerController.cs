@@ -29,6 +29,14 @@ namespace Source.Player
             return Refs.coroutineHandler.StartCoroutine(routine);
         }
 
+        protected void StopCoroutine(Coroutine routine)
+        {
+            if (routine != null)
+            {
+                Refs.coroutineHandler.StopCoroutine(routine);
+            }
+        }
+
         public virtual void Init(PlayerReferences refs)
         {
             Refs = refs;

@@ -46,9 +46,9 @@ namespace Source
 
         private IEnumerator JumpCoroutine()
         {
-            Debug.Log("Started jumping");
-            var velocityY = 2f * _jumpHeight * _moveSpeed / _jumpTopDistance;
-            var gravity = Gravity.Value.y * 2f * _jumpHeight * (_moveSpeed * _moveSpeed) /
+            var gravityValue = Gravity.Value.y;
+            var velocityY = -gravityValue * 2f * _jumpHeight * _moveSpeed / _jumpTopDistance;
+            var gravity = gravityValue * 2f * _jumpHeight * (_moveSpeed * _moveSpeed) /
                           (_jumpTopDistance * _jumpTopDistance);
                 
             do
@@ -57,18 +57,14 @@ namespace Source
                 var offsetY = velocityY * dt + 0.5f * gravity * dt * dt;
                 var offsetZ = _velocityZ * dt;
                 var offset = new Vector3(0f, offsetY, offsetZ);
-//                offset = ApplySafety(offset);
 
                 Translate(offset);
-                Debug.Log("Translate");
 
                 velocityY += gravity * dt;
                 
                 yield return new WaitForFixedUpdate();
             }
             while (!_isLanded);
-            
-            Debug.Log("Exit loop");
             
             _jumpCoroutine = null;
         }
@@ -80,14 +76,7 @@ namespace Source
             _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask) 
                 ? safetyHit.distance
                 : _groundSafetyDistance;
-            
-//            if (IsJumping)
-//            {
-//                var log = _isLanded
-//                    ? $"Landed on distance {hit.distance}"
-//                    : "Not landed";
-//                Debug.Log(log);
-//            }
+
             Debug.DrawLine(ray.origin, ray.GetPoint(_groundCheckDistance));
             Debug.DrawLine(ray.origin, ray.GetPoint(_groundSafetyDistance), Color.green);
             
@@ -103,14 +92,46 @@ namespace Source
             
             _jumpTopDistance = _jumpDistance / 2f;
 
-            Gravity.OnGravitySwitched += TransformGravity;
+            Gravity.onGravitySwitched += OnGravityChanged;
             
             TransformGravity();
         }
 
+        private void OnGravityChanged()
+        {
+            TransformGravity();
+            
+            StopCoroutine(_jumpCoroutine);
+            _jumpCoroutine = null;
+            
+//            Refs.collider.enabled = false;
+            StartCoroutine(RotationCoroutine());
+        }
+
+        private IEnumerator RotationCoroutine()
+        {
+            var currentRotation = Refs.rig.rotation;
+            var targetEulerAngles = currentRotation.eulerAngles;
+            targetEulerAngles.z = -targetEulerAngles.z;
+            var targetRotation = Quaternion.Euler(targetEulerAngles);
+
+            const float rotationTime = 1f;
+            var currentTime = 0f;
+            while (currentTime < rotationTime)
+            {
+                var t = currentTime / rotationTime;
+                t = t * t * t * (t * (6f * t - 15f) + 10f);
+                Refs.rig.rotation = Quaternion.Slerp(currentRotation, targetRotation, t);
+
+                currentTime += Time.deltaTime;
+                
+                yield return null;
+            }
+        }
+
         public override void Dispose()
         {
-            Gravity.OnGravitySwitched -= TransformGravity;
+            Gravity.onGravitySwitched -= OnGravityChanged;
         }
 
         private void TransformGravity()
