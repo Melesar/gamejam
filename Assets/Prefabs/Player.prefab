@@ -68,7 +68,6 @@ MonoBehaviour:
   _refs:
     transform: {fileID: 467834707672519406}
     rigidbody: {fileID: 467834707672519407}
-    floorContact: {fileID: 467834707672519406}
 --- !u!114 &4450249353536900338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 285470012bf95544c85b336edb8d212f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
