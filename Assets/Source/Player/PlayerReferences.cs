@@ -10,5 +10,7 @@ namespace Source.Player
         public Transform rig;
         public Rigidbody rigidbody;
         public MonoBehaviour coroutineHandler;
+        public Transform groundContact;
+        public Transform obstacleDetectionContact;
     }
 }

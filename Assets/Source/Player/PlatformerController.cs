@@ -66,7 +66,6 @@ namespace Source
             if (!IsJumping && _isLanded)
             {
                 _jumpCoroutine = StartCoroutine(JumpCoroutine());
-//                AnimationProperties.jumpDirection = 1f;
             }
         }
 
@@ -108,7 +107,7 @@ namespace Source
             var lookDirection = new Vector3(0f, 0f, _velocityZ);
             lookDirection = Transform.TransformDirection(lookDirection);
 
-            var ray = new Ray(Refs.rigidbody.position, lookDirection);
+            var ray = new Ray(Refs.obstacleDetectionContact.position, lookDirection);
             _isFacingObstacle =
                 Physics.Raycast(ray, _obstacleDetectionDistance, _groundMask);
             
@@ -117,7 +116,8 @@ namespace Source
 
         private void AirControl()
         {
-            var ray = new Ray(Refs.rigidbody.position, _worldGravity);
+            var groundContact = Refs.groundContact.localPosition + Refs.rigidbody.position;
+            var ray = new Ray(groundContact, _worldGravity);
             _isLanded = Physics.Raycast(ray, out var hit, _groundCheckDistance, _groundMask);
             _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask)
                 ? safetyHit.distance
