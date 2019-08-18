@@ -10,6 +10,7 @@ namespace Source
     public class PlatformerController : PlayerController
     {
         [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _jumpSpeed;
         [SerializeField] private float _jumpHeight = 2f;
         [SerializeField] private float _jumpDistance = 3f;
 
@@ -52,8 +53,8 @@ namespace Source
         private IEnumerator JumpCoroutine()
         {
             var gravityValue = Gravity.Value.y;
-            var velocityY = -gravityValue * 2f * _jumpHeight * _moveSpeed / _jumpTopDistance;
-            var gravity = gravityValue * 2f * _jumpHeight * (_moveSpeed * _moveSpeed) /
+            var velocityY = -gravityValue * 2f * _jumpHeight * _jumpSpeed / _jumpTopDistance;
+            var gravity = gravityValue * 2f * _jumpHeight * (_jumpSpeed * _jumpSpeed) /
                           (_jumpTopDistance * _jumpTopDistance);
                 
             do
