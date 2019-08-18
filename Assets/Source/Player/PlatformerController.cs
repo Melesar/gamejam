@@ -123,8 +123,7 @@ namespace Source
                 ? safetyHit.distance
                 : _groundSafetyDistance;
 
-            Debug.DrawLine(ray.origin, ray.GetPoint(_groundCheckDistance));
-            Debug.DrawLine(ray.origin, ray.GetPoint(_groundSafetyDistance), Color.green);
+            Debug.DrawLine(ray.origin, ray.GetPoint(_groundCheckDistance), Color.green);
 
             if (!IsJumping && !_isLanded)
             {
