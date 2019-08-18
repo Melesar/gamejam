@@ -21,6 +21,11 @@ namespace Source.Player
 
         private void ChangeController(GameState state)
         {
+            if (_currentController != null)
+            {
+                _currentController.Dispose();
+            }
+            
             _currentController = _controllers.Find(c => c.state == state).controller;
             _currentController.Init(_refs);
 

@@ -14,6 +14,16 @@ namespace Source
             var horizontal = Input.GetAxis("Horizontal");
 
             _controller.Move(vertical, horizontal);
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                _controller.Jump();
+            }
+
+            if (Input.GetButtonDown("Gravity"))
+            {
+                Gravity.Switch();
+            }
         }
 
         public void OnControllerChanged(PlayerController controller)
