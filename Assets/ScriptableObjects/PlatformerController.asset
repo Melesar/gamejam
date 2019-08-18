@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: PlatformerController
   m_EditorClassIdentifier: 
   _moveSpeed: 5
-  _groundCheckDistance: 0
+  _jumpHeight: 2
+  _jumpDistance: 3
+  _groundCheckDistance: 0.2
   _groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256

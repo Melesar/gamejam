@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Source.Player
@@ -21,10 +23,25 @@ namespace Source.Player
         {
             
         }
-        
-        public void Init(PlayerReferences refs)
+
+        protected Coroutine StartCoroutine(IEnumerator routine)
+        {
+            return Refs.coroutineHandler.StartCoroutine(routine);
+        }
+
+        public virtual void Init(PlayerReferences refs)
         {
             Refs = refs;
+        }
+
+        public virtual void Dispose()
+        {
+            
+        }
+
+        private void OnDisable()
+        {
+            Dispose();
         }
     }
 }

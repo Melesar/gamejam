@@ -8,5 +8,6 @@ namespace Source.Player
     {
         public Transform transform;
         public Rigidbody rigidbody;
+        public MonoBehaviour coroutineHandler;
     }
 }
