@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71bf9a515754479a3bb055dd146a7aa, type: 3}
   m_Name: PlatformerController
   m_EditorClassIdentifier: 
-  _moveSpeed: 15
+  _moveSpeed: 7
+  _jumpSpeed: 10
   _jumpHeight: 4
   _jumpDistance: 5
+  _obstacleDetectionDistance: 1
   _groundCheckDistance: 0.3
   _groundSafetyDistance: 1
   _groundMask:

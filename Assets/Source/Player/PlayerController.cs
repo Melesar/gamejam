@@ -4,8 +4,16 @@ using UnityEngine;
 
 namespace Source.Player
 {
+    public class AnimationProperties
+    {
+        public float moveDirection;
+        public float jumpDirection;
+        public bool isGrounded;
+    }
+    
     public abstract class PlayerController : ScriptableObject
     {
+        public AnimationProperties AnimationProperties { get; private set; }
         protected PlayerReferences Refs { get; private set; }
 
         protected Transform Transform => Refs.transform;
@@ -40,6 +48,7 @@ namespace Source.Player
         public virtual void Init(PlayerReferences refs)
         {
             Refs = refs;
+            AnimationProperties = new AnimationProperties();
         }
 
         public virtual void Dispose()

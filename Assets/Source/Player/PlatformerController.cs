@@ -37,9 +37,28 @@ namespace Source
         public override void Move(float vertical, float horizontal)
         {
             _velocityZ = vertical * _moveSpeed;
+
+            Rotate(vertical);
             
             var offset = _velocityZ * Time.fixedDeltaTime;
             Translate(new Vector3(0f, 0f, offset));
+            
+            AnimationProperties.moveDirection = Mathf.Abs(vertical);
+        }
+
+        private void Rotate(float vertical)
+        {
+            var rotation = Refs.rig.localRotation.eulerAngles;
+            if (rotation.y.AlmostZero() && vertical < 0f)
+            {
+                rotation.y = 180f;
+                Refs.rig.localRotation = Quaternion.Euler(rotation);
+            } 
+            else if (Mathf.Approximately(rotation.y, 180f) && vertical > 0f)
+            {
+                rotation.y = 0f;
+                Refs.rig.localRotation = Quaternion.Euler(rotation);
+            }
         }
 
         public override void Jump()
@@ -47,6 +66,7 @@ namespace Source
             if (!IsJumping && _isLanded)
             {
                 _jumpCoroutine = StartCoroutine(JumpCoroutine());
+//                AnimationProperties.jumpDirection = 1f;
             }
         }
 
@@ -63,6 +83,8 @@ namespace Source
                 var offsetY = velocityY * dt + 0.5f * gravity * dt * dt;
                 var offsetZ = _velocityZ * dt;
                 var offset = new Vector3(0f, offsetY, offsetZ);
+
+                AnimationProperties.jumpDirection = -Vector3.Dot(offset, Gravity.Value);
 
                 Translate(offset);
 
@@ -107,6 +129,12 @@ namespace Source
             if (!IsJumping && !_isLanded)
             {
                 Translate(_moveSpeed * DeltaTime * Gravity.Value);
+            }
+
+            AnimationProperties.isGrounded = _isLanded;
+            if (_isLanded)
+            {
+                AnimationProperties.jumpDirection = 0f;
             }
         }
 

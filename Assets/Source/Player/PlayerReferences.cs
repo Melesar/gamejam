@@ -10,6 +10,5 @@ namespace Source.Player
         public Transform rig;
         public Rigidbody rigidbody;
         public MonoBehaviour coroutineHandler;
-        public Collider collider;
     }
 }
