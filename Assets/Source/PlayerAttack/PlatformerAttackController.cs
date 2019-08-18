@@ -11,7 +11,7 @@ namespace Source.PlayerAttack
         {
             var mousePosition = Input.mousePosition;
             mousePosition.z = 10;
-            var mousePos = Refs.camera.ScreenToWorldPoint(mousePosition);
+            var mousePos = Camera.main.ScreenToWorldPoint(mousePosition);
             var direction = mousePos - Refs.shootingOrigin.position;
             direction = Vector3.ProjectOnPlane(direction, Refs.shootingOrigin.right);
             

@@ -3,6 +3,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Source.Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 namespace Source
 {
@@ -24,11 +25,16 @@ namespace Source
         [SerializeField] private float _groundSafetyDistance;
         [SerializeField] private LayerMask _groundMask;
 
+        [Space]
+
+        [SerializeField] private Gravity _gravity;
+
         private bool IsJumping => _jumpCoroutine != null;
         
         private Coroutine _jumpCoroutine;
         private Vector3 _worldGravity;
         private bool _isLanded;
+        private bool _isChangingGravity;
         private float _currentSafetyDistance;
         private float _jumpTopDistance;
         private float _velocityZ;
@@ -73,7 +79,7 @@ namespace Source
 
         private IEnumerator JumpCoroutine()
         {
-            var gravityValue = Gravity.Value.y;
+            var gravityValue = _gravity.Value.y;
             var velocityY = -gravityValue * 2f * _jumpHeight * _jumpSpeed / _jumpTopDistance;
             var gravity = gravityValue * 2f * _jumpHeight * (_jumpSpeed * _jumpSpeed) /
                           (_jumpTopDistance * _jumpTopDistance);
@@ -85,7 +91,7 @@ namespace Source
                 var offsetZ = _velocityZ * dt;
                 var offset = new Vector3(0f, offsetY, offsetZ);
 
-                AnimationProperties.jumpDirection = -Vector3.Dot(offset, Gravity.Value);
+                AnimationProperties.jumpDirection = -Vector3.Dot(offset, _gravity.Value);
 
                 Translate(offset);
 
@@ -129,7 +135,7 @@ namespace Source
 
             if (!IsJumping && !_isLanded)
             {
-                Translate(_moveSpeed * DeltaTime * Gravity.Value);
+                Translate(DeltaTime * _gravity.Multiplied);
             }
 
             AnimationProperties.isGrounded = _isLanded;
@@ -145,7 +151,7 @@ namespace Source
             
             _jumpTopDistance = _jumpDistance / 2f;
 
-            Gravity.onGravitySwitched += OnGravityChanged;
+            _gravity.onGravitySwitched += OnGravityChanged;
             
             TransformGravity();
         }
@@ -158,6 +164,27 @@ namespace Source
             _jumpCoroutine = null;
             
             StartCoroutine(RotationCoroutine());
+            StartCoroutine(TrackGravityChange());
+        }
+
+        private IEnumerator TrackGravityChange()
+        {
+            var velocityZ = _velocityZ;
+            _isChangingGravity = true;
+
+            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
+                (handler, data) => handler.OnGravityChangeStarted());
+            
+            while (!_isLanded)
+            {
+                Translate(0f, 0f, velocityZ * DeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
+
+            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
+                (handler, data) => handler.OnGravityChangeFinished());
+            
+            _isChangingGravity = false;
         }
 
         private IEnumerator RotationCoroutine()
@@ -182,12 +209,12 @@ namespace Source
 
         public override void Dispose()
         {
-            Gravity.onGravitySwitched -= OnGravityChanged;
+            _gravity.onGravitySwitched -= OnGravityChanged;
         }
 
         private void TransformGravity()
         {
-            _worldGravity = Transform.TransformDirection(Gravity.Value);
+            _worldGravity = Transform.TransformDirection(_gravity.Value);
         }
 
         private void Translate(float x, float y, float z)
@@ -197,7 +224,7 @@ namespace Source
 
         private Vector3 ApplySafety(Vector3 offset)
         {
-            var dot = Vector3.Dot(offset, Gravity.Value);
+            var dot = Vector3.Dot(offset, _gravity.Value);
             if (dot.AlmostZero() && _isFacingObstacle)
             {
                 return Vector3.zero;

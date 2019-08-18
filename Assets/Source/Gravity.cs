@@ -2,15 +2,26 @@
 using System;
 using UnityEngine;
 
-public static class Gravity
+[CreateAssetMenu]
+public class Gravity : ScriptableObject
 {
-    public static Vector3 Value { get; private set; } = new Vector3(0f, -1f, 0f);
+    [SerializeField] private Vector3 _value = new Vector3(0f, -10f, 0f);
+    [SerializeField] private float _multiplier = 7f;
 
-    public static event Action onGravitySwitched;
+    public Vector3 Value { get; private set; }
+
+    public Vector3 Multiplied => Value * _multiplier;
+
+    public event Action onGravitySwitched;
     
-    public static void Switch()
+    public void Switch()
     {
         Value = -Value;
         onGravitySwitched?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        Value = _value;
     }
 }

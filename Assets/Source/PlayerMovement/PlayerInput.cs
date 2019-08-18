@@ -5,36 +5,42 @@ using UnityEngine;
 
 namespace Source
 {
-    public class PlayerInput : MonoBehaviour, IControllerListener, IAttackControllerListener
+    public class PlayerInput : MonoBehaviour, IControllerListener, IAttackControllerListener, IChangeGravityListener
     {
+        [SerializeField] private Gravity _gravity;
         [SerializeField] private float _doubleJumpTime = 0.5f;
         
         private PlayerController _motionController;
         private PlayerAttackController _attackController;
 
+        private bool _isChangingGravity;
         private bool _isJumpPressed;
         private float _doubleJumpTimer;
         
         private void Update()
         {
-            var vertical = Input.GetAxis("Vertical");
-            var horizontal = Input.GetAxis("Horizontal");
-
-            _motionController.Move(vertical, horizontal);
-
             if (Input.GetButton("Fire1"))
             {
                 _attackController.ShootProjectile();
             }
 
-            if (IsJump())
+            if (_isChangingGravity)
             {
-                _motionController.Jump();
+                return;
             }
+
+            var vertical = Input.GetAxis("Vertical");
+            var horizontal = Input.GetAxis("Horizontal");
+
+            _motionController.Move(vertical, horizontal);
 
             if (DetectDoubleJump())
             {
-                Gravity.Switch();
+                _gravity.Switch();
+            }
+            else if (IsJump())
+            {
+                _motionController.Jump();
             }
         }
 
@@ -81,6 +87,16 @@ namespace Source
         public void OnAttackControllerChange(PlayerAttackController attackController)
         {
             _attackController = attackController;
+        }
+
+        public void OnGravityChangeStarted()
+        {
+            _isChangingGravity = true;
+        }
+
+        public void OnGravityChangeFinished()
+        {
+            _isChangingGravity = false;
         }
     }
 }
