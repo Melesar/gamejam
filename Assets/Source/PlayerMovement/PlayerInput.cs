@@ -1,13 +1,16 @@
 using System;
 using Source.Player;
+using Source.PlayerAttack;
 using UnityEngine;
 
 namespace Source
 {
-    public class PlayerInput : MonoBehaviour, IControllerListener
+    public class PlayerInput : MonoBehaviour, IControllerListener, IAttackControllerListener
     {
         [SerializeField] private float _doubleJumpTime = 0.5f;
-        private PlayerController _controller;
+        
+        private PlayerController _motionController;
+        private PlayerAttackController _attackController;
 
         private bool _isJumpPressed;
         private float _doubleJumpTimer;
@@ -17,11 +20,16 @@ namespace Source
             var vertical = Input.GetAxis("Vertical");
             var horizontal = Input.GetAxis("Horizontal");
 
-            _controller.Move(vertical, horizontal);
+            _motionController.Move(vertical, horizontal);
+
+            if (Input.GetButton("Fire1"))
+            {
+                _attackController.ShootProjectile();
+            }
 
             if (IsJump())
             {
-                _controller.Jump();
+                _motionController.Jump();
             }
 
             if (DetectDoubleJump())
@@ -67,7 +75,12 @@ namespace Source
 
         public void OnControllerChanged(PlayerController controller)
         {
-            _controller = controller;
+            _motionController = controller;
+        }
+
+        public void OnAttackControllerChange(PlayerAttackController attackController)
+        {
+            _attackController = attackController;
         }
     }
 }
