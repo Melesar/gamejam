@@ -1,10 +1,10 @@
 using System;
+using Source.Player;
 using UnityEngine;
 
 namespace Source
 {
-    [RequireComponent(typeof(PlayerController))]
-    public class PlayerInput : MonoBehaviour
+    public class PlayerInput : MonoBehaviour, IControllerListener
     {
         private PlayerController _controller;
         
@@ -12,6 +12,13 @@ namespace Source
         {
             var vertical = Input.GetAxis("Vertical");
             var horizontal = Input.GetAxis("Horizontal");
+
+            _controller.Move(vertical, horizontal);
+        }
+
+        public void OnControllerChanged(PlayerController controller)
+        {
+            _controller = controller;
         }
     }
 }
