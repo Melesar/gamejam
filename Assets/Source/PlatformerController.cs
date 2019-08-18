@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Source.Player;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Source
 {
@@ -11,6 +12,9 @@ namespace Source
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _jumpHeight = 2f;
         [SerializeField] private float _jumpDistance = 3f;
+
+        [Space]
+        [SerializeField] private float _obstacleDetectionDistance = 1f;
         
         [Header("Ground check")]
         [SerializeField] private float _groundCheckDistance;
@@ -25,6 +29,7 @@ namespace Source
         private float _currentSafetyDistance;
         private float _jumpTopDistance;
         private float _velocityZ;
+        private bool _isFacingObstacle;
 
         private float DeltaTime => Time.fixedDeltaTime;
 
@@ -32,7 +37,7 @@ namespace Source
         {
             _velocityZ = vertical * _moveSpeed;
             
-            var offset = _velocityZ * Time.deltaTime;
+            var offset = _velocityZ * Time.fixedDeltaTime;
             Translate(new Vector3(0f, 0f, offset));
         }
 
@@ -71,15 +76,33 @@ namespace Source
 
         public override void FixedUpdate()
         {
+            AirControl();
+            ObstacleDetection();
+        }
+
+        private void ObstacleDetection()
+        {
+            var lookDirection = new Vector3(0f, 0f, _velocityZ);
+            lookDirection = Transform.TransformDirection(lookDirection);
+
+            var ray = new Ray(Refs.rigidbody.position, lookDirection);
+            _isFacingObstacle =
+                Physics.Raycast(ray, _obstacleDetectionDistance, _groundMask);
+            
+            Debug.DrawLine(ray.origin, ray.GetPoint(_obstacleDetectionDistance), Color.magenta);
+        }
+
+        private void AirControl()
+        {
             var ray = new Ray(Refs.rigidbody.position, _worldGravity);
             _isLanded = Physics.Raycast(ray, out var hit, _groundCheckDistance, _groundMask);
-            _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask) 
+            _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask)
                 ? safetyHit.distance
                 : _groundSafetyDistance;
 
             Debug.DrawLine(ray.origin, ray.GetPoint(_groundCheckDistance));
             Debug.DrawLine(ray.origin, ray.GetPoint(_groundSafetyDistance), Color.green);
-            
+
             if (!IsJumping && !_isLanded)
             {
                 Translate(_moveSpeed * DeltaTime * Gravity.Value);
@@ -104,7 +127,6 @@ namespace Source
             StopCoroutine(_jumpCoroutine);
             _jumpCoroutine = null;
             
-//            Refs.collider.enabled = false;
             StartCoroutine(RotationCoroutine());
         }
 
@@ -146,7 +168,13 @@ namespace Source
 
         private Vector3 ApplySafety(Vector3 offset)
         {
-            if (Vector3.Dot(offset, Gravity.Value) <= 0f)
+            var dot = Vector3.Dot(offset, Gravity.Value);
+            if (dot.AlmostZero() && _isFacingObstacle)
+            {
+                return Vector3.zero;
+            }
+            
+            if (dot <= 0f)
             {
                 return offset;
             }
