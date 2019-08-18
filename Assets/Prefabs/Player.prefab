@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 467834707672519406}
   - component: {fileID: 467834707672519407}
   - component: {fileID: 3256159178882290958}
+  - component: {fileID: 4450249353536900338}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -65,8 +66,21 @@ MonoBehaviour:
   - state: 0
     controller: {fileID: 11400000, guid: 8f719cdeb795cb947b0c55ab976ae4c5, type: 2}
   _refs:
+    transform: {fileID: 467834707672519406}
     rigidbody: {fileID: 467834707672519407}
     floorContact: {fileID: 467834707672519406}
+--- !u!114 &4450249353536900338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467834707672519401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7893601cb94f8a83c32dced8e6c3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &467834709010240021
 GameObject:
   m_ObjectHideFlags: 0

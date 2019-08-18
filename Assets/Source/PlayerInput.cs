@@ -1,12 +1,12 @@
 using System;
+using Source.Player;
 using UnityEngine;
 
 namespace Source
 {
-    [RequireComponent(typeof(PlatformerController))]
-    public class PlayerInput : MonoBehaviour
+    public class PlayerInput : MonoBehaviour, IControllerListener
     {
-        private PlatformerController _controller;
+        private PlayerController _controller;
         
         private void Update()
         {
@@ -16,9 +16,9 @@ namespace Source
             _controller.Move(vertical, horizontal);
         }
 
-        private void Awake()
+        public void OnControllerChanged(PlayerController controller)
         {
-            _controller = GetComponent<PlatformerController>();
+            _controller = controller;
         }
     }
 }

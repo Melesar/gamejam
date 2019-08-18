@@ -16,14 +16,26 @@ namespace Source.Player
         
         [SerializeField] private List<ControllerMapping> _controllers;
         [SerializeField] private PlayerReferences _refs;
+        
+        private PlayerController _currentController;
 
         private void ChangeController(GameState state)
         {
-            var controller = _controllers.Find(c => c.state == state).controller;
-            controller.Init(_refs);
+            _currentController = _controllers.Find(c => c.state == state).controller;
+            _currentController.Init(_refs);
 
             ExecuteEvents.Execute<IControllerListener>(gameObject, null,
-                (handler, data) => handler.OnControllerChanged(controller));
+                (handler, data) => handler.OnControllerChanged(_currentController));
+        }
+
+        private void FixedUpdate()
+        {
+            _currentController.FixedUpdate();
+        }
+
+        private void Update()
+        {
+            _currentController.Update();
         }
 
         private void Start()
