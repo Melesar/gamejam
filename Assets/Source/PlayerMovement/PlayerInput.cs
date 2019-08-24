@@ -13,12 +13,18 @@ namespace Source
         private PlayerController _motionController;
         private PlayerAttackController _attackController;
 
+        private bool _isDead;
         private bool _isChangingGravity;
         private bool _isJumpPressed;
         private float _doubleJumpTimer;
         
         private void Update()
         {
+            if (_isDead)
+            {
+                return;
+            }
+            
             if (Input.GetButton("Fire1"))
             {
                 _attackController.ShootProjectile();
@@ -97,6 +103,21 @@ namespace Source
         public void OnGravityChangeFinished()
         {
             _isChangingGravity = false;
+        }
+
+        private void Start()
+        {
+            PlayerHealth.dead += OnDeath;
+        }
+
+        private void OnDeath()
+        {
+            _isDead = true;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerHealth.dead -= OnDeath;
         }
     }
 }

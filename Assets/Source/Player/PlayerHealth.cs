@@ -37,6 +37,7 @@ namespace Source.Player
             }
         }
         
+        [ContextMenu("Die")]
         private void Die()
         {
             dead?.Invoke();
