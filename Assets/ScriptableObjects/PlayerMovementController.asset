@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e71bf9a515754479a3bb055dd146a7aa, type: 3}
-  m_Name: PlatformerController
+  m_Name: PlayerMovementController
   m_EditorClassIdentifier: 
   _moveSpeed: 2.5
   _jumpSpeed: 5

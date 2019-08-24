@@ -12,7 +12,7 @@ namespace Source.AI
     {
         private readonly Queue<ICommand> _commandPool = new Queue<ICommand>();
 
-        protected AIContext Context { get; private set; }
+        protected AIContext Context { get; }
         
         private readonly AIControllersRepository _controllersRepository;
 

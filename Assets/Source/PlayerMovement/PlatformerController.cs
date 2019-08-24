@@ -27,6 +27,8 @@ namespace Source
 
         [SerializeField] private Gravity _gravity;
 
+        public bool IsGrounded => _isLanded;
+        
         private bool IsJumping => _jumpCoroutine != null;
         
         private Coroutine _jumpCoroutine;
@@ -171,8 +173,12 @@ namespace Source
             _isChangingGravity = true;
 
             Refs.rigidbody.gameObject.ExecuteEvent<IChangeGravityListener>(handler => handler.OnGravityChangeStarted());
-//            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
-//                (handler, data) => handler.OnGravityChangeStarted());
+
+            while (_isLanded)
+            {
+                Translate(0f, 0f, velocityZ * DeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
             
             while (!_isLanded)
             {
@@ -181,8 +187,6 @@ namespace Source
             }
 
             Refs.rigidbody.gameObject.ExecuteEvent<IChangeGravityListener>(handler => handler.OnGravityChangeFinished());
-//            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
-//                (handler, data) => handler.OnGravityChangeFinished());
             
             _isChangingGravity = false;
         }

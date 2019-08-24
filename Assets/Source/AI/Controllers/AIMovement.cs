@@ -7,7 +7,7 @@ namespace Source.AI
     {
         [SerializeField] private float _moveSpeed;
         
-        public void Move(Vector3 direction)
+        public virtual void Move(Vector3 direction)
         {
             transform.Translate(Time.deltaTime * _moveSpeed * direction);    
         }

@@ -31,6 +31,7 @@ namespace Source.AI
             _context = new AIContext
             {
                 raycastOrigin = _raycastOrigin,
+                player = GameObject.FindWithTag("Player")
             };
 
             _controllersRepository = new AIControllersRepository(agent);

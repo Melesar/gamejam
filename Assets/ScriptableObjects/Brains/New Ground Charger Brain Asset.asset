@@ -10,6 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: GroundChargerBrain
+  m_Name: New Ground Charger Brain Asset
   m_EditorClassIdentifier: Assembly-CSharp:Source.AI:GroundChargerBrainAsset
-  _maxTravelDistance: 15
+  _maxTravelDistance: 5
+  _attackRange: 7
+  _notPlayerMask:
+    serializedVersion: 2
+    m_Bits: 311
+  _gravity: {fileID: 11400000, guid: 9a17c855d903f0f458387f11f6b1528a, type: 2}
