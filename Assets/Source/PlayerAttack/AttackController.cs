@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Source.PlayerAttack
 {
-    public abstract class PlayerAttackController : ScriptableObject
+    public abstract class AttackController : ScriptableObject
     {
         [SerializeField] protected float _shootCooldown;
         [SerializeField] protected Projectile _projectilePrefab;

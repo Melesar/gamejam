@@ -13,10 +13,10 @@ namespace Source.Player
             public GameState state;
             public PlayerController controller;
         }
-        
+
         [SerializeField] private List<ControllerMapping> _controllers;
         [SerializeField] private PlayerReferences _refs;
-        
+
         private PlayerController _currentController;
 
         private void ChangeController(GameState state)
@@ -25,12 +25,11 @@ namespace Source.Player
             {
                 _currentController.Dispose();
             }
-            
+
             _currentController = _controllers.Find(c => c.state == state).controller;
             _currentController.Init(_refs);
 
-            ExecuteEvents.Execute<IControllerListener>(gameObject, null,
-                (handler, data) => handler.OnControllerChanged(_currentController));
+            gameObject.ExecuteEvent<IControllerListener>(listener => listener.OnControllerChanged(_currentController));
         }
 
         private void FixedUpdate()

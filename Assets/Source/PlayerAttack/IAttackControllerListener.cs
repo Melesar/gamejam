@@ -4,6 +4,6 @@ namespace Source.PlayerAttack
 {
     public interface IAttackControllerListener : IEventSystemHandler
     {
-        void OnAttackControllerChange(PlayerAttackController attackController);
+        void OnAttackControllerChange(AttackController attackController);
     }
 }

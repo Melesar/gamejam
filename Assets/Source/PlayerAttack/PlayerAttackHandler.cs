@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Source.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,15 +10,16 @@ namespace Source.PlayerAttack
     public struct AttackMapping
     {
         public GameState state;
-        public PlayerAttackController controller;
+        public AttackController controller;
     }
-    
+
     public class PlayerAttackHandler : MonoBehaviour
     {
         [SerializeField] private List<AttackMapping> _controllers;
         [SerializeField] private PlayerReferences _references;
-        
-        private PlayerAttackController _currentController;
+
+        private AttackController _currentController;
+        private bool _isDead;
 
         private void ChangeController(GameState state)
         {
@@ -25,12 +27,12 @@ namespace Source.PlayerAttack
             {
                 _currentController.Dispose();
             }
-            
+
             _currentController = _controllers.Find(c => c.state == state).controller;
             _currentController.Init(_references);
 
-            ExecuteEvents.Execute<IAttackControllerListener>(gameObject, null,
-                (handler, data) => handler.OnAttackControllerChange(_currentController));
+            gameObject.ExecuteEvent<IAttackControllerListener>(listener =>
+                listener.OnAttackControllerChange(_currentController));
         }
 
         private void Update()

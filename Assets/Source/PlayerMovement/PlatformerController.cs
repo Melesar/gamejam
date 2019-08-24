@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Source.Player;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 namespace Source
@@ -29,6 +27,8 @@ namespace Source
 
         [SerializeField] private Gravity _gravity;
 
+        public bool IsGrounded => _isLanded;
+        
         private bool IsJumping => _jumpCoroutine != null;
         
         private Coroutine _jumpCoroutine;
@@ -126,7 +126,7 @@ namespace Source
         {
             var groundContact = Refs.groundContact.localPosition + Refs.rigidbody.position;
             var ray = new Ray(groundContact, _worldGravity);
-            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, out var hit, _groundCheckDistance, _groundMask);
+            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, _groundCheckDistance, _groundMask);
             _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask)
                 ? safetyHit.distance
                 : _groundSafetyDistance;
@@ -172,8 +172,13 @@ namespace Source
             var velocityZ = _velocityZ;
             _isChangingGravity = true;
 
-            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
-                (handler, data) => handler.OnGravityChangeStarted());
+            Refs.rigidbody.gameObject.ExecuteEvent<IChangeGravityListener>(handler => handler.OnGravityChangeStarted());
+
+            while (_isLanded)
+            {
+                Translate(0f, 0f, velocityZ * DeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
             
             while (!_isLanded)
             {
@@ -181,8 +186,7 @@ namespace Source
                 yield return new WaitForFixedUpdate();
             }
 
-            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
-                (handler, data) => handler.OnGravityChangeFinished());
+            Refs.rigidbody.gameObject.ExecuteEvent<IChangeGravityListener>(handler => handler.OnGravityChangeFinished());
             
             _isChangingGravity = false;
         }
