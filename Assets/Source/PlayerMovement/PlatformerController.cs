@@ -26,9 +26,6 @@ namespace Source
         [Space]
 
         [SerializeField] private Gravity _gravity;
-        [SerializeField] private bool _isDebug = true;
-        
-        public float Velocity => _velocityZ;
 
         private bool IsJumping => _jumpCoroutine != null;
         
@@ -42,7 +39,6 @@ namespace Source
         private bool _isFacingObstacle;
 
         private float DeltaTime => Time.fixedDeltaTime;
-
 
         public override void Move(float vertical, float horizontal)
         {
@@ -121,7 +117,7 @@ namespace Source
             _isFacingObstacle =
                 Physics.Raycast(ray, _obstacleDetectionDistance, _groundMask);
             
-            DrawLine(ray.origin, ray.GetPoint(_obstacleDetectionDistance), Color.magenta);
+            Debug.DrawLine(ray.origin, ray.GetPoint(_obstacleDetectionDistance), Color.magenta);
         }
 
         private void AirControl()
@@ -133,7 +129,7 @@ namespace Source
                 ? safetyHit.distance
                 : _groundSafetyDistance;
 
-            DrawLine(ray.origin, ray.GetPoint(_groundCheckDistance), Color.green);
+            Debug.DrawLine(ray.origin, ray.GetPoint(_groundCheckDistance), Color.green);
 
             if (!IsJumping && !_isLanded)
             {
@@ -256,14 +252,6 @@ namespace Source
             translation = ApplySafety(translation);
             var offset = Transform.TransformVector(translation);
             Refs.rigidbody.position += offset;
-        }
-
-        private void DrawLine(Vector3 start, Vector3 end, Color color)
-        {
-            if (!Application.isEditor || _isDebug)
-            {
-                Debug.DrawLine(start, end, color);
-            }
         }
     }
 }
