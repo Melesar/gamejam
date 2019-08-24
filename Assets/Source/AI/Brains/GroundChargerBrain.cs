@@ -34,7 +34,7 @@ namespace Source.AI
         
         private BrainParams Params { get; }
 
-        private bool IsAttacking => false;
+        private bool IsAttacking => GetComponent<AIGroundChargeAttack>().IsAttacking;
         
         private Vector3 _direction;
         private Vector3 _targetPoint;
@@ -49,11 +49,17 @@ namespace Source.AI
 
             if (IsPlayerReachable())
             {
-                ChasePlayer();
-                
                 if (CanAttackPlayer())
                 {
                     AttackPlayer();
+                }
+                else
+                {
+                    if (IsAttacking)
+                    {
+                        GetComponent<AIGroundChargeAttack>().StopAttacking();
+                    }
+                    ChasePlayer();
                 }
             }
             else
@@ -90,7 +96,7 @@ namespace Source.AI
 
         private void AttackPlayer()
         {
-            
+            SubmitCommand(new AttackCommand {Player = Context.player});
         }
 
         private void ChasePlayer()
@@ -118,7 +124,7 @@ namespace Source.AI
             Debug.DrawLine(transform.position, _targetPoint, Color.red);
         }
 
-        public void ChooseNewDirection()
+        private void ChooseNewDirection()
         {
             var newDirection = Mathf.Sign(Random.Range(-1f, 1f)) * Transform.forward;
             var distance = Random.Range(0f, Params.MaxTravelDistance);
@@ -135,7 +141,7 @@ namespace Source.AI
 
             _direction = newDirection;
         }
-
+        
         public GroundChargerBrain(AIContext context,
             AIControllersRepository controllersRepository,
             BrainParams @params) :

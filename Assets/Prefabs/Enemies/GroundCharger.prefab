@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 8658306624857211340}
   - component: {fileID: 6271757153294361595}
   - component: {fileID: 7375316253902093725}
+  - component: {fileID: 3091939915629137563}
   - component: {fileID: 6568956395354263726}
   m_Layer: 0
   m_Name: GroundCharger
@@ -225,6 +226,22 @@ MonoBehaviour:
     groundContact: {fileID: 812704511240147066}
     obstacleDetectionContact: {fileID: 182022114867117526}
   _controller: {fileID: 11400000, guid: c3a349ae5f0c38646ab88d66763b6127, type: 2}
+--- !u!114 &3091939915629137563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235286610595190650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77cf5651de1941e4b35d4ccde4cdfd22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attacksInterval: 1.5
+  _rig: {fileID: 7564046853994797724}
+  _gravity: {fileID: 11400000, guid: 9a17c855d903f0f458387f11f6b1528a, type: 2}
+  _collider: {fileID: 6618751080770426489}
 --- !u!54 &6568956395354263726
 Rigidbody:
   m_ObjectHideFlags: 0
