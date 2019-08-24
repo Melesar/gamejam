@@ -13,7 +13,7 @@ namespace Source.PlayerAttack
             mousePosition.z = 10;
             var mousePos = Camera.main.ScreenToWorldPoint(mousePosition);
             var direction = mousePos - Refs.shootingOrigin.position;
-            direction = Vector3.ProjectOnPlane(direction, Refs.shootingOrigin.right);
+            direction = Vector3.ProjectOnPlane(direction.normalized, Vector3.up);
             
             return direction;
         }

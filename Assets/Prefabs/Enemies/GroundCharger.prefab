@@ -168,6 +168,8 @@ GameObject:
   - component: {fileID: 6271757153294361595}
   - component: {fileID: 7375316253902093725}
   - component: {fileID: 3091939915629137563}
+  - component: {fileID: 146615043372318328}
+  - component: {fileID: 7777434739445107081}
   - component: {fileID: 6568956395354263726}
   m_Layer: 0
   m_Name: GroundCharger
@@ -238,10 +240,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cf5651de1941e4b35d4ccde4cdfd22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 15
+  _chargeSpeed: 10
   _attacksInterval: 1.5
-  _rig: {fileID: 7564046853994797724}
-  _gravity: {fileID: 11400000, guid: 9a17c855d903f0f458387f11f6b1528a, type: 2}
   _collider: {fileID: 6618751080770426489}
+--- !u!114 &146615043372318328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235286610595190650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2efae082e44d1894749c5cba2f1568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 40
+--- !u!114 &7777434739445107081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235286610595190650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800ee61b19904f82a0def84810814e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &6568956395354263726
 Rigidbody:
   m_ObjectHideFlags: 0

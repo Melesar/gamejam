@@ -7,12 +7,14 @@ namespace Source
 {
     public class GameLoop : MonoBehaviour
     {
+        [SerializeField] private Gravity _gravity;
         private bool _isDead;
 
         private void Update()
         {
             if (_isDead && Input.GetKeyDown(KeyCode.Return))
             {
+                _gravity.ResetValue();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }

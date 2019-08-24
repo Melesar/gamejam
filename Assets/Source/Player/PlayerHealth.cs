@@ -3,49 +3,22 @@ using UnityEngine;
 
 namespace Source.Player
 {
-    public class PlayerHealth : MonoBehaviour
+    public class PlayerHealth : Health
     {
-        [SerializeField] private float _maxHealth;
-        
-        private float _health;
-
         public static event Action dead;
         public static event Action<float> healthChanged;
 
-        public float Health
+        protected override void OnHealthChanged()
         {
-            get => _health;
-            private set
-            {
-                var isHealthChanged = !Mathf.Approximately(value, _health);
-                _health = value;
-                if (isHealthChanged)
-                {
-                    Debug.Log($"Health changed to {_health}");
-                    healthChanged?.Invoke(_health);
-                }
-            }
-            
+            base.OnHealthChanged();
+            healthChanged?.Invoke(Value);
         }
 
-        public void TakeDamage(float damage)
-        {
-            Health = Mathf.Max(0f, Health - damage);
-            if (Health.AlmostZero())
-            {
-                Die();
-            }
-        }
-        
         [ContextMenu("Die")]
-        private void Die()
+        protected override void Die()
         {
+            base.Die();
             dead?.Invoke();
-        }
-
-        private void Start()
-        {
-            Health = _maxHealth;
         }
     }
 }

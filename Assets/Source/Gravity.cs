@@ -20,6 +20,11 @@ public class Gravity : ScriptableObject
         onGravitySwitched?.Invoke();
     }
 
+    public void ResetValue()
+    {
+        Value = _value;
+    }
+
     private void OnEnable()
     {
         Value = _value;
