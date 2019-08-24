@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85e21e20eb74784b3e1719c5652425b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brainAsset: {fileID: 0}
+  _brainAsset: {fileID: 11400000, guid: 0566a58154d0d014387490af31738afd, type: 2}
   _raycastOrigin: {fileID: 182022114867117526}
 --- !u!114 &7375316253902093725
 MonoBehaviour:
