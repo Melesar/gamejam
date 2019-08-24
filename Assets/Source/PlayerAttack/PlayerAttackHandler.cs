@@ -29,8 +29,10 @@ namespace Source.PlayerAttack
             _currentController = _controllers.Find(c => c.state == state).controller;
             _currentController.Init(_references);
 
-            ExecuteEvents.Execute<IAttackControllerListener>(gameObject, null,
-                (handler, data) => handler.OnAttackControllerChange(_currentController));
+            gameObject.ExecuteEvent<IAttackControllerListener>(listener =>
+                listener.OnAttackControllerChange(_currentController));
+//            ExecuteEvents.Execute<IAttackControllerListener>(gameObject, null,
+//                (handler, data) => handler.OnAttackControllerChange(_currentController));
         }
 
         private void Update()

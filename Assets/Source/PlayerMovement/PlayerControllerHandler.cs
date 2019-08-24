@@ -29,8 +29,9 @@ namespace Source.Player
             _currentController = _controllers.Find(c => c.state == state).controller;
             _currentController.Init(_refs);
 
-            ExecuteEvents.Execute<IControllerListener>(gameObject, null,
-                (handler, data) => handler.OnControllerChanged(_currentController));
+            gameObject.ExecuteEvent<IControllerListener>(listener => listener.OnControllerChanged(_currentController));
+//            ExecuteEvents.Execute<IControllerListener>(gameObject, null,
+//                (handler, data) => handler.OnControllerChanged(_currentController));
         }
 
         private void FixedUpdate()

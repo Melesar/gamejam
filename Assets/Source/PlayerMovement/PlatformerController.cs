@@ -170,8 +170,9 @@ namespace Source
             var velocityZ = _velocityZ;
             _isChangingGravity = true;
 
-            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
-                (handler, data) => handler.OnGravityChangeStarted());
+            Refs.rigidbody.gameObject.ExecuteEvent<IChangeGravityListener>(handler => handler.OnGravityChangeStarted());
+//            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
+//                (handler, data) => handler.OnGravityChangeStarted());
             
             while (!_isLanded)
             {
@@ -179,8 +180,9 @@ namespace Source
                 yield return new WaitForFixedUpdate();
             }
 
-            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
-                (handler, data) => handler.OnGravityChangeFinished());
+            Refs.rigidbody.gameObject.ExecuteEvent<IChangeGravityListener>(handler => handler.OnGravityChangeFinished());
+//            ExecuteEvents.Execute<IChangeGravityListener>(Refs.rigidbody.gameObject, null,
+//                (handler, data) => handler.OnGravityChangeFinished());
             
             _isChangingGravity = false;
         }
