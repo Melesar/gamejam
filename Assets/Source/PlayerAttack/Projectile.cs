@@ -20,11 +20,6 @@ namespace Source.PlayerAttack
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-            {
-                return;
-            }
-
             other.gameObject.GetComponent<Health>()?.TakeDamage(_damage);
 
             _mesh.SetActive(false);

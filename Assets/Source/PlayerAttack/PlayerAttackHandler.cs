@@ -10,7 +10,7 @@ namespace Source.PlayerAttack
     public struct AttackMapping
     {
         public GameState state;
-        public PlayerAttackController controller;
+        public AttackController controller;
     }
 
     public class PlayerAttackHandler : MonoBehaviour
@@ -18,7 +18,7 @@ namespace Source.PlayerAttack
         [SerializeField] private List<AttackMapping> _controllers;
         [SerializeField] private PlayerReferences _references;
 
-        private PlayerAttackController _currentController;
+        private AttackController _currentController;
         private bool _isDead;
 
         private void ChangeController(GameState state)

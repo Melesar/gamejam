@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Source.AI
 {
-    public class AttackCommand : ICommand
+    public class ChargeCommand : ICommand
     {
         public GameObject Player { get; set; }
         

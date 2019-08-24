@@ -11,7 +11,7 @@ namespace Source
         [SerializeField] private float _doubleJumpTime = 0.5f;
         
         private PlayerController _motionController;
-        private PlayerAttackController _attackController;
+        private AttackController _attackController;
 
         private bool _isDead;
         private bool _isChangingGravity;
@@ -90,7 +90,7 @@ namespace Source
             _motionController = controller;
         }
 
-        public void OnAttackControllerChange(PlayerAttackController attackController)
+        public void OnAttackControllerChange(AttackController attackController)
         {
             _attackController = attackController;
         }

@@ -2,42 +2,37 @@ using UnityEngine;
 
 namespace Source.AI
 {
-    [CreateAssetMenu(menuName = "Brains/Ground charger")]
-    public class GroundChargerBrainAsset : AIBrainAsset
+    [CreateAssetMenu(menuName = "Brains/Ground shooter")]
+    public class GroundShooterBrainAsset : AIBrainAsset
     {
-        [SerializeField] private float _maxTravelDistance = 5f;
-        [SerializeField] private float _attackRange = 7f;
-        [SerializeField] private LayerMask _notPlayerMask;
-        [SerializeField] private Gravity _gravity;
+        [SerializeField] private float _maxTravelDistance;
+        [SerializeField] private LayerMask _noPlayerMask;
+        [SerializeField] private float _attackRange;
         
         public override AIBrain GetBrain(AIContext context, AIControllersRepository controllersRepository)
         {
-            return new GroundChargerBrain(context, controllersRepository, new GroundChargerBrain.BrainParams
+            return new GroundShooterBrain(context, controllersRepository, new GroundShooterBrain.BrainParams
             {
-                NotPlayerMask = _notPlayerMask,
                 MaxTravelDistance = _maxTravelDistance,
+                NoPlayerMask = _noPlayerMask,
                 AttackRange = _attackRange,
-                Gravity = _gravity
             });
         }
     }
-    
-    public class GroundChargerBrain : AIBrain
+
+    public class GroundShooterBrain : AIBrain
     {
         public class BrainParams
         {
-            public float MaxTravelDistance { get; set; }
-            public LayerMask NotPlayerMask { get; set; }
+            public float MaxTravelDistance;
+            public LayerMask NoPlayerMask { get; set; }
             public float AttackRange { get; set; }
-            public Gravity Gravity { get; set; }
         }
-        
-        private BrainParams Params { get; }
 
-        private bool IsAttacking => GetComponent<AIGroundChargeAttack>().IsAttacking;
-        
-        private Vector3 _direction;
         private Vector3 _targetPoint;
+        private Vector3 _direction;
+
+        private BrainParams Params { get; }
         
         public override void UpdateBrain(float dt)
         {
@@ -47,65 +42,36 @@ namespace Source.AI
                 return;
             }
 
-            if (IsPlayerReachable())
+            if (CanAttackPlayer())
             {
-                if (CanAttackPlayer())
-                {
-                    AttackPlayer();
-                }
-                else
-                {
-                    if (IsAttacking)
-                    {
-                        SubmitCommand(new StopChargeAttackCommand());
-                    }
-                    ChasePlayer();
-                }
+                AttackPlayer();
             }
             else
             {
                 Patrol();
             }
         }
-        
-        private bool IsPlayerReachable()
+
+        private bool CanAttackPlayer()
         {
             var playerPosition = Context.player.transform.position;
             var origin = Context.raycastOrigin.position;
-            var direction = playerPosition - origin;
-            if (Physics.Raycast(origin, direction, direction.magnitude, Params.NotPlayerMask))
+            var direction = Vector3.Normalize(playerPosition - Transform.position);
+            if (Physics.Raycast(origin, direction, Params.AttackRange, Params.NoPlayerMask))
             {
                 //Player is not visible
                 return false;
             }
 
-            var projectedDirection = Vector3.ProjectOnPlane(direction, -Params.Gravity.Value);
-            if (Physics.Raycast(origin, projectedDirection, projectedDirection.magnitude, Params.NotPlayerMask))
-            {
-                return false;
-            }
-            
-            return true;
-        }
-
-        private bool CanAttackPlayer()
-        {
-            var playerPosition = Context.player.transform.position;
-            return Vector3.Distance(playerPosition, Transform.position) < Params.AttackRange;
+            return Vector3.Distance(Transform.position, playerPosition) <= Params.AttackRange;
         }
 
         private void AttackPlayer()
         {
-            SubmitCommand(new ChargeCommand {Player = Context.player});
-        }
-
-        private void ChasePlayer()
-        {
             var playerPosition = Context.player.transform.position;
-            var direction = Vector3.ProjectOnPlane(playerPosition - Transform.position, Transform.up);
-            direction.Normalize();
+            var direction = Vector3.Normalize(playerPosition - Transform.position);
             
-            SubmitCommand(new MoveCommand {Direction = direction});
+            SubmitCommand(new ShootCommand{Direction = direction});
         }
 
         private void Patrol()
@@ -142,7 +108,7 @@ namespace Source.AI
             _direction = newDirection;
         }
         
-        public GroundChargerBrain(AIContext context,
+        public GroundShooterBrain(AIContext context,
             AIControllersRepository controllersRepository,
             BrainParams @params) :
             base(context, controllersRepository)
