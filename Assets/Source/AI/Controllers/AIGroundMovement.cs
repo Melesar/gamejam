@@ -9,8 +9,10 @@ namespace Source.AI
     {
         [SerializeField] private PlayerReferences _references;
         [SerializeField] private PlatformerController _controller;
+        [SerializeField] private Animator _animator;
 
         private PlatformerController _controllerInstance;
+        private readonly int _motionAnimationHash = Animator.StringToHash("motion");
         
         public event Action finishedSwitchingGravity;
         
@@ -20,6 +22,8 @@ namespace Source.AI
         {
             direction = Vector3.Project(direction, transform.forward);
             _controllerInstance.Move(direction.z, 0f);
+            
+            _animator.SetFloat(_motionAnimationHash, Mathf.Abs(direction.z));
         }
 
         private void FixedUpdate()

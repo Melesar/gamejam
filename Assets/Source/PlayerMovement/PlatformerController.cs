@@ -65,21 +65,6 @@ namespace Source
             {
                 Refs.rig.Rotate(0, 180, 0);
             }
-//            if (!vertical.AlmostZero())
-//            {
-//                Refs.rig.localRotation = ;
-//            }
-//            var rotation = Refs.rig.localRotation.eulerAngles;
-//            if (rotation.y.AlmostZero() && vertical < 0f)
-//            {
-//                rotation.y = 180f;
-//                Refs.rig.localRotation = Quaternion.Euler(rotation);
-//            } 
-//            else if (Mathf.Approximately(rotation.y, 180f) && vertical > 0f)
-//            {
-//                rotation.y = 0f;
-//                Refs.rig.localRotation = Quaternion.Euler(rotation);
-//            }
         }
 
         public override void Jump()

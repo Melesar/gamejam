@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Numerics;
 using DG.Tweening;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Source.AI
 {
@@ -11,8 +13,12 @@ namespace Source.AI
         [SerializeField] private float _chargeSpeed = 10f;
         [SerializeField] private float _attacksInterval = 1.5f;
         [SerializeField] private Collider _collider;
+        [SerializeField] private Animator _animator;
         
         public bool IsAttacking => _attackCoroutine != null;
+
+        private readonly int _isAttackAnimationHash = Animator.StringToHash("isAttacking");
+        private readonly int _attackStateAnimationHash = Animator.StringToHash("attackState");
 
         private Coroutine _attackCoroutine;
         private Sequence _sequence;
@@ -21,6 +27,7 @@ namespace Source.AI
         {
             if (!IsAttacking)
             {
+                _animator.SetBool(_isAttackAnimationHash, true);
                 _attackCoroutine = StartCoroutine(AttackCoroutine(player));
             }
         }
@@ -29,6 +36,7 @@ namespace Source.AI
         {
             _sequence?.Kill();
             _collider.enabled = true;
+            _animator.SetBool(_isAttackAnimationHash, false);
             
             if (IsAttacking)
             {
@@ -43,7 +51,8 @@ namespace Source.AI
             {
                 var currentPosition = transform.position;
                 var targetPosition = player.transform.position;
-                var t = Vector3.Distance(currentPosition, targetPosition) / _chargeSpeed;
+                var totalDistance = Vector3.Distance(currentPosition, targetPosition);
+                var t = totalDistance / _chargeSpeed;
                 
                 _sequence = DOTween.Sequence();
                 _sequence.AppendCallback(() => _collider.enabled = false);
@@ -53,7 +62,12 @@ namespace Source.AI
                 _sequence.AppendCallback(() => _collider.enabled = true);
                 _sequence.Play();
 
-                yield return _sequence.WaitForCompletion();
+                while (!_sequence.IsComplete())
+                {
+                    var currentDistance = Vector3.Distance(transform.position, currentPosition);
+                    _animator.SetFloat(_attackStateAnimationHash, currentDistance / totalDistance);
+                    yield return null;
+                }
 
                 yield return new WaitForSeconds(_attacksInterval);
             }
