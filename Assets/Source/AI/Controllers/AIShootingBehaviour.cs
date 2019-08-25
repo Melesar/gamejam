@@ -8,21 +8,24 @@ namespace Source.AI
     {
         [SerializeField] private PlayerReferences _references;
         [SerializeField] private AIShootingController _controller;
+
+        private AIShootingController _controllerInstance;
         
         public void Shoot(Vector3 direction)
         {
-            _controller.Direction = direction;
-            _controller.ShootProjectile();
+            _controllerInstance.Direction = direction;
+            _controllerInstance.ShootProjectile();
         }
 
         private void Update()
         {
-            _controller.Update();
+            _controllerInstance.Update();
         }
 
         private void Start()
         {
-            _controller.Init(_references);
+            _controllerInstance = Instantiate(_controller);
+            _controllerInstance.Init(_references);
         }
     }
 }

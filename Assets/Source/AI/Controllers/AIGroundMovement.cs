@@ -10,6 +10,8 @@ namespace Source.AI
         [SerializeField] private PlayerReferences _references;
         [SerializeField] private PlatformerController _controller;
 
+        private PlatformerController _controllerInstance;
+        
         public event Action finishedSwitchingGravity;
         
         public bool IsGrounded => _controller.IsGrounded;
@@ -17,17 +19,18 @@ namespace Source.AI
         public override void Move(Vector3 direction)
         {
             direction = Vector3.Project(direction, transform.forward);
-            _controller.Move(direction.z, 0f);
+            _controllerInstance.Move(direction.z, 0f);
         }
 
         private void FixedUpdate()
         {
-            _controller.FixedUpdate();
+            _controllerInstance.FixedUpdate();
         }
 
         private void Start()
         {
-            _controller.Init(_references);
+            _controllerInstance = Instantiate(_controller);
+            _controllerInstance.Init(_references);
         }
 
         public void OnGravityChangeFinished()
