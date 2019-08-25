@@ -21,7 +21,7 @@ namespace Source.AI
         protected void Patrol()
         {
             var transform = Transform;
-            if (Vector3.Distance(transform.position, _targetPoint) < 0.7f)
+            if (Vector3.Distance(transform.position, _targetPoint) < 1f)
             {
                 ChooseNewDirection();
             }

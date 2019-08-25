@@ -12,5 +12,6 @@ namespace Source.Player
         public MonoBehaviour coroutineHandler;
         public Transform groundContact;
         public Transform obstacleDetectionContact;
+        public PlayerCamera camera;
     }
 }

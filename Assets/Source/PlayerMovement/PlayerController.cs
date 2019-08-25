@@ -60,5 +60,8 @@ namespace Source.Player
         {
             Dispose();
         }
+
+        public abstract void OnCollision(Collision other);
+        public abstract void OnCollisionExit(Collision other);
     }
 }

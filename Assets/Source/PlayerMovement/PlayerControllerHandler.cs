@@ -32,6 +32,16 @@ namespace Source.Player
             gameObject.ExecuteEvent<IControllerListener>(listener => listener.OnControllerChanged(_currentController));
         }
 
+        private void OnCollisionExit(Collision other)
+        {
+            _currentController.OnCollisionExit(other);
+        }
+
+        private void OnCollisionStay(Collision other)
+        {
+            _currentController.OnCollision(other);
+        }
+
         private void FixedUpdate()
         {
             _currentController.FixedUpdate();

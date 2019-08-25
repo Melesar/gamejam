@@ -1,4 +1,5 @@
 using System.Collections;
+using Source.Interactables;
 using Source.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,17 +29,21 @@ namespace Source
         [SerializeField] private Gravity _gravity;
 
         public bool IsGrounded => _isLanded;
+        public bool AffectedByGravity { get; set; } = true;
+        
         
         private bool IsJumping => _jumpCoroutine != null;
-        
+
         private Coroutine _jumpCoroutine;
         private Vector3 _worldGravity;
         private bool _isLanded;
         private bool _isChangingGravity;
+        private bool _isFacingObstacle;
         private float _currentSafetyDistance;
         private float _jumpTopDistance;
         private float _velocityZ;
-        private bool _isFacingObstacle;
+        private float _prevInput = 1;
+        
 
         private float DeltaTime => Time.fixedDeltaTime;
 
@@ -52,20 +57,28 @@ namespace Source
             Translate(new Vector3(0f, 0f, offset));
             
             AnimationProperties.moveDirection = Mathf.Abs(vertical);
+            if (!vertical.AlmostZero())
+            {
+                _prevInput = vertical;
+            }
         }
 
         private void Rotate(float vertical)
         {
-            var rotation = Refs.rig.localRotation.eulerAngles;
-            if (rotation.y.AlmostZero() && vertical < 0f)
-            {
-                rotation.y = 180f;
-                Refs.rig.localRotation = Quaternion.Euler(rotation);
-            } 
-            else if (Mathf.Approximately(rotation.y, 180f) && vertical > 0f)
+            var rotation = Refs.rig.localEulerAngles;
+            if (vertical > 0)
             {
                 rotation.y = 0f;
-                Refs.rig.localRotation = Quaternion.Euler(rotation);
+            }
+            else if (vertical < 0)
+            {
+                rotation.y = 180f;
+            }
+            Refs.rig.localEulerAngles = rotation;
+
+            if (Refs.camera != null)
+            {
+                Refs.camera.SwitchZ(vertical);
             }
         }
 
@@ -110,6 +123,37 @@ namespace Source
             ObstacleDetection();
         }
 
+        public override void OnCollision(Collision other)
+        {
+//            CheckLanding(other);
+        }
+
+        public override void OnCollisionExit(Collision other)
+        {
+//            _isLanded = false;
+        }
+        
+        private void CheckLanding(Collision collision)
+        {
+            _isLanded = false;
+            foreach (var contact in collision.contacts)
+            {
+                var dot = Vector3.Dot(-contact.normal, _worldGravity);
+                if (dot < 0.5f)
+                {
+                    continue;
+                }
+                
+                var ray = new Ray(contact.point + 0.01f * contact.normal, -contact.normal);
+                Debug.DrawRay(ray.origin, ray.direction, Color.magenta);
+                if (Physics.Raycast(ray, _groundCheckDistance, _groundMask))
+                {
+                    _isLanded = true;
+                    break;
+                }
+            }
+        }
+
         private void ObstacleDetection()
         {
             var lookDirection = new Vector3(0f, 0f, _velocityZ);
@@ -126,7 +170,15 @@ namespace Source
         {
             var groundContact = Refs.groundContact.localPosition + Refs.rigidbody.position;
             var ray = new Ray(groundContact, _worldGravity);
-            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, _groundCheckDistance, _groundMask);
+            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, out var hit, _groundCheckDistance, _groundMask);
+            if (_isLanded)
+            {
+                var platform = hit.collider.GetComponentInParent<MovingPlatform>();
+                if (platform != null)
+                {
+                    Translate(DeltaTime * platform.Velocity);
+                }
+            }
             _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask)
                 ? safetyHit.distance
                 : _groundSafetyDistance;
@@ -158,6 +210,11 @@ namespace Source
 
         private void OnGravityChanged()
         {
+            if (!AffectedByGravity)
+            {
+                return;
+            }
+            
             TransformGravity();
             
             StopCoroutine(_jumpCoroutine);
@@ -165,6 +222,11 @@ namespace Source
             
             StartCoroutine(RotationCoroutine());
             StartCoroutine(TrackGravityChange());
+
+            if (Refs.camera != null)
+            {
+                Refs.camera.SwitchX();
+            }
         }
 
         private IEnumerator TrackGravityChange()
@@ -233,7 +295,7 @@ namespace Source
             {
                 return Vector3.zero;
             }
-            
+
             if (dot <= 0f)
             {
                 return offset;

@@ -34,6 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4811898582112562200}
+  - {fileID: 47846290169548973}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -75,6 +76,7 @@ MonoBehaviour:
     coroutineHandler: {fileID: 3256159178882290958}
     groundContact: {fileID: 958937912388533861}
     obstacleDetectionContact: {fileID: 2505784399070940620}
+    camera: {fileID: 0}
 --- !u!114 &4450249353536900338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +199,50 @@ Transform:
   m_Father: {fileID: 4811898582112562200}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2918944515751592711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 47846290169548973}
+  - component: {fileID: 804338164488337250}
+  m_Layer: 14
+  m_Name: Gravity volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &47846290169548973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2918944515751592711}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.83, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 467834707672519406}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &804338164488337250
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2918944515751592711}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4604063653575627084
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,11 +381,6 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7452788225828751770, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843350097383952940, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
         type: 3}
       propertyPath: m_Layer
       value: 9
@@ -620,6 +661,11 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2316226724398905831, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843350097383952940, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
         type: 3}
       propertyPath: m_Layer
       value: 9
