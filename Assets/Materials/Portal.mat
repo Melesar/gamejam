@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Portal
-  m_Shader: {fileID: -6465566751694194690, guid: 04c66b39a3cd35f4db0672ac922a9090,
+  m_Shader: {fileID: -6465566751694194690, guid: 2b310e359c41af14aa31284e2a0e6ba1,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -33,6 +33,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_A15CF5BD:
+        m_Texture: {fileID: 2800000, guid: 936a43635c57b0a408fb70bee7efbb2a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_DB931641:
+        m_Texture: {fileID: 2800000, guid: 996868edad6f9eb418b8e4352fda53cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -62,8 +70,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_65471E17: 1.6
+    - Vector1_21759D00: 1
+    - Vector1_34B3D506: 0.02
+    - Vector1_65471E17: 2
+    - Vector1_735B3C51: 0
+    - Vector1_905AA98B: -1
+    - Vector1_BC257926: 1
+    - Vector1_DDED9045: 0.075
     - Vector1_F146F8C5: 15
+    - Vector1_FB3764D4: 100
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -86,8 +101,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_60022ECE: {r: 0.29803923, g: 1.3019608, b: 2.9960785, a: 0}
-    - Color_8DD8A4B2: {r: 0.031772893, g: 0.55517423, b: 0.9622642, a: 0}
+    - Color_60022ECE: {r: 0.59607846, g: 2.6039217, b: 5.992157, a: 0}
+    - Color_7D8CECC9: {r: 0, g: 1.0039216, b: 23.968628, a: 1}
+    - Color_8DD8A4B2: {r: 0, g: 2.4, b: 2.9333334, a: 0}
+    - Vector2_6857B442: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_72D8E8F9: {r: 0.5, g: 0.7, b: 0, a: 0}
+    - Vector2_8E3C0384: {r: 0.25, g: 0.15, b: 0, a: 0}
+    - Vector2_B47045B1: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
