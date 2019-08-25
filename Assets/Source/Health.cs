@@ -4,7 +4,7 @@ namespace Source
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] private float _maxHealth;
+        [SerializeField] protected float _maxHealth;
         
         private float _health;
 
@@ -42,7 +42,7 @@ namespace Source
             gameObject.ExecuteEvent<IHealthListener>(listener => listener.OnDeath());
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             Value = _maxHealth;
         }

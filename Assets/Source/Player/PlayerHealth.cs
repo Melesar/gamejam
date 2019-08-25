@@ -6,12 +6,12 @@ namespace Source.Player
     public class PlayerHealth : Health
     {
         public static event Action dead;
-        public static event Action<float> healthChanged;
+        public static event Action<float, float> healthChanged;
 
         protected override void OnHealthChanged()
         {
             base.OnHealthChanged();
-            healthChanged?.Invoke(Value);
+            healthChanged?.Invoke(Value, _maxHealth);
         }
 
         [ContextMenu("Die")]
@@ -19,6 +19,12 @@ namespace Source.Player
         {
             base.Die();
             dead?.Invoke();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            healthChanged?.Invoke(Value, _maxHealth);
         }
     }
 }
