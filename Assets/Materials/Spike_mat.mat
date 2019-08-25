@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spike
+  m_Name: Spike_mat
   m_Shader: {fileID: -6465566751694194690, guid: 6820425217505f94ab41da6db0d00707,
     type: 3}
   m_ShaderKeywords: 

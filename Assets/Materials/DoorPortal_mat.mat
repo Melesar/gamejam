@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8413595222142621233
+--- !u!114 &-3663077684580306173
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,19 +20,31 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyArrow
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 2
+  m_Name: DoorPortal_mat
+  m_Shader: {fileID: -6465566751694194690, guid: 249b3b9879380b349b127892c7c8a1f9,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_A15CF5BD:
+        m_Texture: {fileID: 2800000, guid: d96151e5565589c48b168acbd866c091, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_DB527DD6:
+        m_Texture: {fileID: 2800000, guid: e6e4df27078455b4cbf8d4f93ccd147d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_DB931641:
+        m_Texture: {fileID: 2800000, guid: 996868edad6f9eb418b8e4352fda53cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -62,6 +74,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_1E3159FF: 0.15
+    - Vector1_21759D00: 1
+    - Vector1_2F90E661: 2
+    - Vector1_34B3D506: 0.001
+    - Vector1_4A580EE3: 28
+    - Vector1_65471E17: 2
+    - Vector1_735B3C51: 0.5
+    - Vector1_905AA98B: 0.6
+    - Vector1_9581331C: 2.5
+    - Vector1_BC257926: 0.3
+    - Vector1_DDED9045: 0.1
+    - Vector1_F146F8C5: 15
+    - Vector1_FB3764D4: 100
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -84,7 +109,17 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.8666667, g: 0.2034947, b: 0.16862744, a: 1}
+    - Color_60022ECE: {r: 0.59607846, g: 2.6039217, b: 5.992157, a: 0}
+    - Color_74202AED: {r: 0, g: 2.2588236, b: 47.937256, a: 0}
+    - Color_7D8CECC9: {r: 0, g: 1.0039216, b: 23.968628, a: 1}
+    - Color_8DD8A4B2: {r: 0, g: 2.4, b: 2.9333334, a: 0}
+    - Vector2_6857B442: {r: 2, g: 2, b: 0, a: 0}
+    - Vector2_6D96733F: {r: 0.35, g: 0.65, b: 0, a: 0}
+    - Vector2_72D8E8F9: {r: 0.5, g: 0.7, b: 0, a: 0}
+    - Vector2_8E3C0384: {r: 0.25, g: 0.15, b: 0, a: 0}
+    - Vector2_AEADB05F: {r: 0.25, g: 0.25, b: 0, a: 0}
+    - Vector2_B47045B1: {r: 0, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 0.82979345, g: 0.0117423395, b: 0.020099353, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
