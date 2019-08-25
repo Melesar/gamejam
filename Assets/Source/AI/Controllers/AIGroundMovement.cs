@@ -14,7 +14,7 @@ namespace Source.AI
         
         public event Action finishedSwitchingGravity;
         
-        public bool IsGrounded => _controller.IsGrounded;
+        public bool IsGrounded => _controllerInstance.IsGrounded;
 
         public override void Move(Vector3 direction)
         {
