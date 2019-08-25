@@ -35,10 +35,11 @@ namespace Source
         private Vector3 _worldGravity;
         private bool _isLanded;
         private bool _isChangingGravity;
+        private bool _isFacingObstacle;
         private float _currentSafetyDistance;
         private float _jumpTopDistance;
         private float _velocityZ;
-        private bool _isFacingObstacle;
+        private float _prevInput = 1;
 
         private float DeltaTime => Time.fixedDeltaTime;
 
@@ -52,21 +53,33 @@ namespace Source
             Translate(new Vector3(0f, 0f, offset));
             
             AnimationProperties.moveDirection = Mathf.Abs(vertical);
+            if (!vertical.AlmostZero())
+            {
+                _prevInput = vertical;
+            }
         }
 
         private void Rotate(float vertical)
         {
-            var rotation = Refs.rig.localRotation.eulerAngles;
-            if (rotation.y.AlmostZero() && vertical < 0f)
+            if (vertical * _prevInput < 0)
             {
-                rotation.y = 180f;
-                Refs.rig.localRotation = Quaternion.Euler(rotation);
-            } 
-            else if (Mathf.Approximately(rotation.y, 180f) && vertical > 0f)
-            {
-                rotation.y = 0f;
-                Refs.rig.localRotation = Quaternion.Euler(rotation);
+                Refs.rig.Rotate(0, 180, 0);
             }
+//            if (!vertical.AlmostZero())
+//            {
+//                Refs.rig.localRotation = ;
+//            }
+//            var rotation = Refs.rig.localRotation.eulerAngles;
+//            if (rotation.y.AlmostZero() && vertical < 0f)
+//            {
+//                rotation.y = 180f;
+//                Refs.rig.localRotation = Quaternion.Euler(rotation);
+//            } 
+//            else if (Mathf.Approximately(rotation.y, 180f) && vertical > 0f)
+//            {
+//                rotation.y = 0f;
+//                Refs.rig.localRotation = Quaternion.Euler(rotation);
+//            }
         }
 
         public override void Jump()
