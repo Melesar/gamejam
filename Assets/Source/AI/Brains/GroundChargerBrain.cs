@@ -2,23 +2,10 @@ using UnityEngine;
 
 namespace Source.AI
 {
-    public class GroundChargerBrain : AIBrain
+    public class GroundChargerBrain : GroundAgentBrain
     {
-        public class BrainParams
-        {
-            public float MaxTravelDistance { get; set; }
-            public LayerMask NotPlayerMask { get; set; }
-            public float AttackRange { get; set; }
-            public Gravity Gravity { get; set; }
-        }
-        
-        private BrainParams Params { get; }
-
         private bool IsAttacking => GetComponent<AIGroundChargeAttack>().IsAttacking;
-        
-        private Vector3 _direction;
-        private Vector3 _targetPoint;
-        
+
         public override void UpdateBrain(float dt)
         {
             var movement = GetComponent<AIGroundMovement>();
@@ -83,53 +70,23 @@ namespace Source.AI
         {
             var playerPosition = Context.player.transform.position;
             var direction = Vector3.ProjectOnPlane(playerPosition - Transform.position, Transform.up);
+            var chaseDistance = direction.magnitude;
+
+            if (!CheckGround(direction, chaseDistance))
+            {
+                return;
+            }
+            
             direction.Normalize();
             
             SubmitCommand(new MoveCommand {Direction = direction});
         }
 
-        private void Patrol()
-        {
-            var transform = Transform;
-            if (Vector3.Distance(transform.position, _targetPoint) < 0.7f)
-            {
-                ChooseNewDirection();
-            }
-            else
-            {
-                var moveCommand = new MoveCommand {Direction = _direction};
-                SubmitCommand(moveCommand);
-            }
-
-            Debug.DrawLine(transform.position, _targetPoint, Color.red);
-        }
-
-        private void ChooseNewDirection()
-        {
-            var newDirection = Mathf.Sign(Random.Range(-1f, 1f)) * Transform.forward;
-            var distance = Random.Range(0f, Params.MaxTravelDistance);
-
-            if (Physics.Raycast(Context.raycastOrigin.position, newDirection, out var hit, distance))
-            {
-                _targetPoint = hit.point;
-                _targetPoint.x = Transform.position.x;
-            }
-            else
-            {
-                _targetPoint = Transform.position + distance * newDirection;
-            }
-
-            _direction = newDirection;
-        }
-        
         public GroundChargerBrain(AIContext context,
             AIControllersRepository controllersRepository,
             BrainParams @params) :
-            base(context, controllersRepository)
+            base(context, controllersRepository, @params)
         {
-            Params = @params;
-            ChooseNewDirection();
-            GetComponent<AIGroundMovement>().finishedSwitchingGravity += ChooseNewDirection;
         }
     }
 }

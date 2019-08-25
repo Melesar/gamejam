@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9871201444974bd4849561df9cf1f80d, type: 3}
   m_Name: GroundShooterBrainAsset
   m_EditorClassIdentifier: Assembly-CSharp:Source.AI:GroundShooterBrainAsset
+  _minTravelDistance: 2
   _maxTravelDistance: 5
   _noPlayerMask:
     serializedVersion: 2

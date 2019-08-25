@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7564046853994797724}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 812704511240147066}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4995559148908677229}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.16099979, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 5134191147421201436}
   - component: {fileID: 7039045908648087068}
   - component: {fileID: 6618751080770426489}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 146615043372318328}
   - component: {fileID: 7777434739445107081}
   - component: {fileID: 6568956395354263726}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: GroundCharger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 182022114867117526}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: RaycastOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}

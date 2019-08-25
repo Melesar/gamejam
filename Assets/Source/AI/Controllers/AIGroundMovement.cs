@@ -41,5 +41,10 @@ namespace Source.AI
         public void OnGravityChangeStarted()
         {
         }
+
+        private void OnDestroy()
+        {
+            _controllerInstance.Dispose();
+        }
     }
 }

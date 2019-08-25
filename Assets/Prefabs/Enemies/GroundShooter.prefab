@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7564046853994797724}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1538926440858074738}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: ShootingOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 812704511240147066}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 5134191147421201436}
   - component: {fileID: 7039045908648087068}
   - component: {fileID: 6618751080770426489}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 6993530013534751701}
   - component: {fileID: 7777434739445107081}
   - component: {fileID: 6568956395354263726}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: GroundShooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 182022114867117526}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: RaycastOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
