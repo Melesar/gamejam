@@ -31,7 +31,7 @@ namespace Source
         public bool IsGrounded => _isLanded;
         
         private bool IsJumping => _jumpCoroutine != null;
-        
+
         private Coroutine _jumpCoroutine;
         private Vector3 _worldGravity;
         private bool _isLanded;
@@ -41,6 +41,7 @@ namespace Source
         private float _jumpTopDistance;
         private float _velocityZ;
         private float _prevInput = 1;
+        
 
         private float DeltaTime => Time.fixedDeltaTime;
 
@@ -71,8 +72,12 @@ namespace Source
             {
                 rotation.y = 180f;
             }
-
             Refs.rig.localEulerAngles = rotation;
+
+            if (Refs.camera != null)
+            {
+                Refs.camera.SwitchZ(vertical);
+            }
         }
 
         public override void Jump()
@@ -210,6 +215,11 @@ namespace Source
             
             StartCoroutine(RotationCoroutine());
             StartCoroutine(TrackGravityChange());
+
+            if (Refs.camera != null)
+            {
+                Refs.camera.SwitchX();
+            }
         }
 
         private IEnumerator TrackGravityChange()
