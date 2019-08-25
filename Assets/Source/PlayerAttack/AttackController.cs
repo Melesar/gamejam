@@ -24,7 +24,8 @@ namespace Source.PlayerAttack
             }
 
             var direction = GetShootDirection();
-            var projectile = Instantiate(_projectilePrefab, Refs.shootingOrigin, false);
+            var projectile = Instantiate(_projectilePrefab);
+            projectile.transform.position = Refs.shootingOrigin.position;
             projectile.Init(direction);
 
             _currentShootCooldown = _shootCooldown;

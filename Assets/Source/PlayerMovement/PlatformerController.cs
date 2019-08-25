@@ -29,6 +29,8 @@ namespace Source
         [SerializeField] private Gravity _gravity;
 
         public bool IsGrounded => _isLanded;
+        public bool AffectedByGravity { get; set; } = true;
+        
         
         private bool IsJumping => _jumpCoroutine != null;
 
@@ -208,6 +210,11 @@ namespace Source
 
         private void OnGravityChanged()
         {
+            if (!AffectedByGravity)
+            {
+                return;
+            }
+            
             TransformGravity();
             
             StopCoroutine(_jumpCoroutine);

@@ -13,6 +13,11 @@ namespace Source.Interactables
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject.layer == LayerMask.NameToLayer("GravityVolume"))
+            {
+                return;
+            }
+            
             var health = other.GetComponentInParent<Health>();
             if (health != null)
             {
@@ -24,6 +29,11 @@ namespace Source.Interactables
 
         private void OnTriggerStay(Collider other)
         {
+            if (other.gameObject.layer == LayerMask.NameToLayer("GravityVolume"))
+            {
+                return;
+            }
+            
             var health = other.GetComponentInParent<Health>();
             if (_damageTime <= 0f)
             {

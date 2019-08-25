@@ -36,6 +36,23 @@ namespace Source.AI
         {
             _controllerInstance = _useInstanceController ? Instantiate(_controller) : _controller;
             _controllerInstance.Init(_references);
+            _controllerInstance.AffectedByGravity = false;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("GravityVolume"))
+            {
+                _controllerInstance.AffectedByGravity = true;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("GravityVolume"))
+            {
+                _controllerInstance.AffectedByGravity = false;
+            }
         }
 
         public void OnGravityChangeFinished()
