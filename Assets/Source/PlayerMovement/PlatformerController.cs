@@ -1,4 +1,5 @@
 using System.Collections;
+using Source.Interactables;
 using Source.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -162,7 +163,15 @@ namespace Source
         {
             var groundContact = Refs.groundContact.localPosition + Refs.rigidbody.position;
             var ray = new Ray(groundContact, _worldGravity);
-            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, _groundCheckDistance, _groundMask);
+            _isLanded = Physics.SphereCast(ray, _groundCheckRadius, out var hit, _groundCheckDistance, _groundMask);
+            if (_isLanded)
+            {
+                var platform = hit.collider.GetComponentInParent<MovingPlatform>();
+                if (platform != null)
+                {
+                    Translate(DeltaTime * platform.Velocity);
+                }
+            }
             _currentSafetyDistance = Physics.Raycast(ray, out var safetyHit, _groundSafetyDistance, _groundMask)
                 ? safetyHit.distance
                 : _groundSafetyDistance;

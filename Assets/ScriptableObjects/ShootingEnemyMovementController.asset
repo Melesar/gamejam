@@ -18,7 +18,7 @@ MonoBehaviour:
   _jumpDistance: 2.5
   _rotationTime: 0.5
   _obstacleDetectionDistance: 0.57
-  _groundCheckDistance: 0.1
+  _groundCheckDistance: 0.4
   _groundCheckRadius: 0.05
   _groundSafetyDistance: 1
   _groundMask:

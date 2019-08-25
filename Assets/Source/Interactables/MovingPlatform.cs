@@ -14,6 +14,8 @@ namespace Source.Interactables
         [SerializeField] private Transform _platform;
         [SerializeField] private Transform[] _points;
         [SerializeField] private PlatformBehaviour _behaviour;
+
+        public Vector3 Velocity => (_targetPosition - _platform.position).normalized * _moveSpeed;
         
         private Vector3 _targetPosition;
         private int _currentPlatformIndex;
