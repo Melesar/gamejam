@@ -61,10 +61,17 @@ namespace Source
 
         private void Rotate(float vertical)
         {
-            if (vertical * _prevInput < 0)
+            var rotation = Refs.rig.localEulerAngles;
+            if (vertical > 0)
             {
-                Refs.rig.Rotate(0, 180, 0);
+                rotation.y = 0f;
             }
+            else if (vertical < 0)
+            {
+                rotation.y = 180f;
+            }
+
+            Refs.rig.localEulerAngles = rotation;
         }
 
         public override void Jump()
@@ -106,6 +113,37 @@ namespace Source
         {
             AirControl();
             ObstacleDetection();
+        }
+
+        public override void OnCollision(Collision other)
+        {
+//            CheckLanding(other);
+        }
+
+        public override void OnCollisionExit(Collision other)
+        {
+//            _isLanded = false;
+        }
+        
+        private void CheckLanding(Collision collision)
+        {
+            _isLanded = false;
+            foreach (var contact in collision.contacts)
+            {
+                var dot = Vector3.Dot(-contact.normal, _worldGravity);
+                if (dot < 0.5f)
+                {
+                    continue;
+                }
+                
+                var ray = new Ray(contact.point + 0.01f * contact.normal, -contact.normal);
+                Debug.DrawRay(ray.origin, ray.direction, Color.magenta);
+                if (Physics.Raycast(ray, _groundCheckDistance, _groundMask))
+                {
+                    _isLanded = true;
+                    break;
+                }
+            }
         }
 
         private void ObstacleDetection()
@@ -231,7 +269,7 @@ namespace Source
             {
                 return Vector3.zero;
             }
-            
+
             if (dot <= 0f)
             {
                 return offset;

@@ -7,6 +7,7 @@ namespace Source.AI
     // ReSharper disable once InconsistentNaming
     public class AIGroundMovement : AIMovement, IChangeGravityListener
     {
+        [SerializeField] private bool _useInstanceController;
         [SerializeField] private PlayerReferences _references;
         [SerializeField] private PlatformerController _controller;
         [SerializeField] private Animator _animator;
@@ -33,7 +34,7 @@ namespace Source.AI
 
         private void Start()
         {
-            _controllerInstance = Instantiate(_controller);
+            _controllerInstance = _useInstanceController ? Instantiate(_controller) : _controller;
             _controllerInstance.Init(_references);
         }
 

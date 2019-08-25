@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 3
+  _useInstanceController: 1
   _references:
     transform: {fileID: 8658306624857211340}
     rig: {fileID: 7564046853994797724}

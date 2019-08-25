@@ -16,7 +16,7 @@ namespace Source.AI
             return new GroundChargerBrain(context, controllersRepository, new GroundAgentBrain.BrainParams
             {
                 NotPlayerMask = _notPlayerMask,
-                MinTravelDistance = _maxTravelDistance,
+                MinTravelDistance = _minTravelDistance,
                 MaxTravelDistance = _maxTravelDistance,
                 AttackRange = _attackRange,
                 Gravity = _gravity
