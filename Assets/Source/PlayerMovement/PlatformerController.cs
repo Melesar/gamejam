@@ -31,16 +31,32 @@ namespace Source
         public override void Move(float vertical, float horizontal)
         {
             _velocity.x = vertical * _moveSpeed;
+
+            if (vertical > 0)
+            {
+                Refs.rig.localRotation = Quaternion.identity;
+            }
+            else if (vertical < 0)
+            {
+                Refs.rig.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            }
         }
 
         public override void Jump()
         {
-            _velocity.y = _jumpVelocity;
+            if (IsGrounded)
+            {
+                _velocity.y = _jumpVelocity;
+            }
         }
 
         public override void FixedUpdate()
         {
             _velocity.y += Mathf.Sign(_gravity.Value) * _jumpGravity * DeltaTime;
+
+            AnimationProperties.moveDirection = Mathf.Abs(_velocity.x);
+            AnimationProperties.jumpDirection = _velocity.y;
+            AnimationProperties.isGrounded = IsGrounded;
 
             Vector2 velocity = _velocity * DeltaTime; 
             Move(ref velocity);
@@ -70,11 +86,21 @@ namespace Source
 
         private void Move(ref Vector2 velocity)
         {
-            if (_raycaster.CastVertically(velocity, out RaycastHit hit))
+            bool isVerticalCollision = _raycaster.CastVertically(velocity, out RaycastHit hit);
+            IsGrounded = isVerticalCollision && velocity.y < 0f;
+            
+            if (isVerticalCollision)
             {
                 velocity.y = Mathf.Sign(velocity.y) * hit.distance;
                 _velocity.y = 0;
             }
+
+            if (_raycaster.CastHorizontally(velocity, out hit))
+            {
+                velocity.x = Mathf.Sign(velocity.x) * hit.distance;
+                _velocity.x = 0;
+            }
+            
         }
 
         private void CalculateJumpStats()
