@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dce2f62ed91e5e43b1c67bc3579d346, type: 3}
   m_Name: Gravity
   m_EditorClassIdentifier: 
-  _value: {x: 0, y: -1, z: 0}
-  _multiplier: 15
+  _value: -10

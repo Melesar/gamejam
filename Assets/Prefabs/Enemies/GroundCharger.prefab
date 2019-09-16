@@ -242,6 +242,7 @@ MonoBehaviour:
     coroutineHandler: {fileID: 7375316253902093725}
     groundContact: {fileID: 812704511240147066}
     obstacleDetectionContact: {fileID: 182022114867117526}
+    camera: {fileID: 0}
   _controller: {fileID: 11400000, guid: c3a349ae5f0c38646ab88d66763b6127, type: 2}
   _animator: {fileID: 569751216536470624}
 --- !u!114 &3091939915629137563
@@ -286,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800ee61b19904f82a0def84810814e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 569751216536470624}
 --- !u!54 &6568956395354263726
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,10 +8,8 @@ namespace Source.Player
     {
         public Transform transform;
         public Transform rig;
-        public Rigidbody rigidbody;
+        public BoxCollider raycastCollider;
         public MonoBehaviour coroutineHandler;
-        public Transform groundContact;
-        public Transform obstacleDetectionContact;
         public PlayerCamera camera;
     }
 }

@@ -46,11 +46,11 @@ namespace Source.AI
                 return false;
             }
 
-            var projectedDirection = Vector3.ProjectOnPlane(direction, -Params.Gravity.Value);
-            if (Physics.Raycast(origin, projectedDirection, projectedDirection.magnitude, Params.NotPlayerMask))
-            {
-                return false;
-            }
+//            var projectedDirection = Vector3.ProjectOnPlane(direction, -Params.Gravity.Value);
+//            if (Physics.Raycast(origin, projectedDirection, projectedDirection.magnitude, Params.NotPlayerMask))
+//            {
+//                return false;
+//            }
             
             return true;
         }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 467834707672519406}
-  - component: {fileID: 467834707672519407}
   - component: {fileID: 3256159178882290958}
   - component: {fileID: 4450249353536900338}
   - component: {fileID: 5332017442713718252}
@@ -38,22 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!54 &467834707672519407
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 467834707672519401}
-  serializedVersion: 2
-  m_Mass: 1e+9
-  m_Drag: Infinity
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &3256159178882290958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,10 +55,8 @@ MonoBehaviour:
   _refs:
     transform: {fileID: 467834707672519406}
     rig: {fileID: 4811898582112562200}
-    rigidbody: {fileID: 467834707672519407}
+    raycastCollider: {fileID: 8082934197432486130}
     coroutineHandler: {fileID: 3256159178882290958}
-    groundContact: {fileID: 958937912388533861}
-    obstacleDetectionContact: {fileID: 2505784399070940620}
     camera: {fileID: 0}
 --- !u!114 &4450249353536900338
 MonoBehaviour:
@@ -310,16 +291,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4811898582112562200}
     m_Modifications:
-    - target: {fileID: 7632833361840226031, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
-        type: 3}
-      propertyPath: m_Name
-      value: boy
-      objectReference: {fileID: 0}
-    - target: {fileID: 7632833361840226031, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 6896731045352852732, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -374,6 +345,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632833361840226031, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
+        type: 3}
+      propertyPath: m_Name
+      value: boy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632833361840226031, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5613237453828634204, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
         type: 3}
@@ -681,6 +662,12 @@ Transform:
 --- !u!95 &7954495213515051198 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3547745351869849990, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
+    type: 3}
+  m_PrefabInstance: {fileID: 6870264155046342968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8082934197432486130 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3419442724681611722, guid: 288e8a3aa67cbb347a0ed6cfde9e4abc,
     type: 3}
   m_PrefabInstance: {fileID: 6870264155046342968}
   m_PrefabAsset: {fileID: 0}

@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: PlayerMovementController
   m_EditorClassIdentifier: 
   _moveSpeed: 2.7
-  _jumpSpeed: 6
   _jumpHeight: 2.7
-  _jumpDistance: 2.5
+  _jumpTime: 1.5
   _rotationTime: 0.1
-  _obstacleDetectionDistance: 1
-  _groundCheckDistance: 0.2
-  _groundCheckRadius: 0.05
-  _groundSafetyDistance: 1
   _groundMask:
     serializedVersion: 2
     m_Bits: 256
+  _raycastSettings:
+    horizontalRaysCount: 5
+    verticalRaysCount: 3
   _gravity: {fileID: 11400000, guid: 9a17c855d903f0f458387f11f6b1528a, type: 2}
