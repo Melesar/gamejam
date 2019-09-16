@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2.7
   _jumpHeight: 2.7
-  _jumpTime: 1.5
+  _jumpTime: 0.5
   _rotationTime: 0.1
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 256
   _raycastSettings:
     horizontalRaysCount: 5
     verticalRaysCount: 3
+    skinWidth: 0.02
+    mask:
+      serializedVersion: 2
+      m_Bits: 256
   _gravity: {fileID: 11400000, guid: 9a17c855d903f0f458387f11f6b1528a, type: 2}
